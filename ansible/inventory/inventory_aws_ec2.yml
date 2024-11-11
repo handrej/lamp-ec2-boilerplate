@@ -1,0 +1,9 @@
+plugin: amazon.aws.aws_ec2
+regions:
+  - eu-central-1
+filters:
+  instance-state-name: running  # Filter to include only running instances
+hostnames:
+  -  tag:Name
+compose:
+  ansible_host: public_ip_address  # Set ansible_host to the public IP

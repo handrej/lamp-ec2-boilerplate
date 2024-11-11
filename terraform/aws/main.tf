@@ -1,32 +1,25 @@
-# main.tf
-
-# ec2.tf
+# Launch EC2 Instances
 resource "aws_instance" "lamp_ec2" {
-  ami                    = var.ami
-  instance_type          = var.instance_type
-  subnet_id              = aws_subnet.public_subnet_1.id
-  vpc_security_group_ids = [aws_security_group.ec2_sg.id]
-  iam_instance_profile   = aws_iam_instance_profile.ssm_instance_profile.name
-
-  user_data = <<-EOF
-              #!/bin/bash
-              yum update -y
-              yum install -y httpd mysql php
-              systemctl start httpd
-              systemctl enable httpd
-              EOF
+  count         = var.instance_count
+  ami           = var.ami
+  instance_type = var.instance_type
+  key_name      = aws_key_pair.key_pair.key_name
+  subnet_id     = element(aws_subnet.public-subnet[*].id, count.index)
+  vpc_security_group_ids = [
+    aws_security_group.ec2_sg.id
+  ]
 
   tags = {
-    Name = "${var.project_name}-ec2"
+    Name = "${var.project_name}-ec2-${count.index + 1}"
   }
 }
 
-# rds.tf
+# RDS MySQL Instance
 resource "aws_db_instance" "lamp_rds" {
-  allocated_storage       = 20
-  backup_retention_period = 7
-  engine                  = "mysql"
-  instance_class          = "db.t3.micro"
+  allocated_storage       = var.db_storage
+  backup_retention_period = var.db_retention
+  engine                  = var.db_engine
+  instance_class          = var.db_instance_class
   db_name                 = var.db_name
   username                = var.db_username
   password                = var.db_password

@@ -1,0 +1,7 @@
+---
+- name: Test EC2 Connection
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Check uptime
+      command: uptime

@@ -27,6 +27,10 @@ crash.*.log
 *.key
 *.pub
 
+# Local development
+.vscode
+credentials.tfvars
+
 # Ignore .lock files
 *.lock.*
 
