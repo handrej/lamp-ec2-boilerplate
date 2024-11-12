@@ -4,13 +4,13 @@ resource "aws_key_pair" "key_pair" {
   public_key = file(var.public_key_path)
 
   tags = {
-    Name = "${var.project_name}-ssh-key-pair"
+    Name = "${var.project_name}-bastion-ssh-key"
   }
 }
 
 # Security Group for ALB
 resource "aws_security_group" "lb_sg" {
-  vpc_id = aws_vpc.lamp_vpc.id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 80
@@ -33,13 +33,13 @@ resource "aws_security_group" "lb_sg" {
 
 # Security Group for EC2 Instances
 resource "aws_security_group" "ec2_sg" {
-  vpc_id = aws_vpc.lamp_vpc.id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.allowed_ssh_cidr]
   }
 
   ingress {
@@ -63,7 +63,7 @@ resource "aws_security_group" "ec2_sg" {
 
 # Security Group for RDS
 resource "aws_security_group" "rds_sg" {
-  vpc_id = aws_vpc.lamp_vpc.id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port       = 3306
@@ -82,4 +82,28 @@ resource "aws_security_group" "rds_sg" {
   tags = {
     Name = "${var.project_name}-rds-sg"
   }
+}
+
+# SSM IAM Role
+resource "aws_iam_role" "ssm_role" {
+  name = "${var.project_name}-ssm-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      }
+    }]
+  })
+}
+# Create an IAM instance profile for the EC2 instance
+resource "aws_iam_instance_profile" "ssm_instance_profile" {
+  name = "${var.project_name}-ssm-instance-profile"
+  role = aws_iam_role.ssm_role.name
+}
+resource "aws_iam_role_policy_attachment" "ssm_role_policy" {
+  role       = aws_iam_role.ssm_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }

@@ -1,0 +1,25 @@
+- name: Install Apache
+  apt:
+    name: apache2
+    state: present
+    update_cache: true
+
+- name: Enable Apache to start on boot
+  service:
+    name: apache2
+    state: started
+    enabled: true
+
+- name: Copy Apache configuration
+  template:
+    src: apache.conf.j2
+    dest: /etc/apache2/sites-available/000-default.conf
+    mode: '0644'
+
+- name: Enable mod_rewrite
+  command: a2enmod rewrite
+    
+- name: Restart Apache
+  service:
+    name: apache2
+    state: restarted

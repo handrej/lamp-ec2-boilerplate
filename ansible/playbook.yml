@@ -1,7 +1,28 @@
 ---
-- name: Test EC2 Connection
-  hosts: all
-  gather_facts: no
+- name: Retrieve AWS SSM parameters and use as variables
+  hosts: localhost
+  gather_facts: false
+  vars:
+    ssm_parameter_endpoint: "rds_endpoint"
+    ssm_parameter_username: "rds_username"
+    ssm_parameter_password: "rds_password"
   tasks:
-    - name: Check uptime
-      command: uptime
+    - name: Fetch username from AWS SSM Parameter Store
+      set_fact:
+        db_endpoint: "{{ lookup('amazon.aws.ssm_parameter', ssm_parameter_endpoint) }}"
+        db_username: "{{ lookup('amazon.aws.ssm_parameter', ssm_parameter_username) }}"
+        db_password: "{{ lookup('amazon.aws.ssm_parameter', ssm_parameter_password) }}"
+- name: Setup Wordpress environment
+  hosts: aws_ec2
+  become: true
+  vars:
+    wordpress_db_name: 'wordpress'
+    wordpress_db_host: "{{ hostvars['localhost'].db_endpoint }}"
+    wordpress_db_user: "{{ hostvars['localhost'].db_username }}"
+    wordpress_db_pass: "{{ hostvars['localhost'].db_password }}"
+  roles:
+    - apache
+    - mysql
+    - php
+    - wordpress
+

@@ -1,62 +1,63 @@
 # variables.tf
 
 variable "aws_region" {
-  default = "eu-central-1"
+  description = "AWS region to deploy resources"
+  type        = string
 }
 
 variable "project_name" {
   description = "Name of the project"
-  default     = "lamp-boilerplate"
+  type        = string
 }
 
 variable "instance_count" {
   description = "Total count of EC2 instances"
-  default     = 2
+}
+
+variable "instance_type" {
+  description = "EC2 Instance type"
+  type        = string
 }
 
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
-  default     = "10.0.0.0/16"
 }
 
 variable "public_subnet_cidrs" {
-  type    = list(string)
-  default = ["10.0.1.0/24", "10.0.3.0/24"]
+  type = list(string)
 }
 
 variable "private_subnet_cidrs" {
-  type    = list(string)
-  default = ["10.0.2.0/24", "10.0.4.0/24"]
+  type = list(string)
 }
 
-variable "ami" {
-  description = "Amazon Linux 2 AMI ID"
-  default     = "ami-00ec1ed16f4837f2f" # exclusive to eu-central-1
-}
-
-variable "instance_type" {
-  description = "EC2 Free Tier Instance type"
-  default     = "t2.micro"
+variable "allowed_ssh_cidr" {
+  description = "Allowed IPs for SSH access"
+  type        = string
 }
 
 variable "db_engine" {
   description = "RDS DB type"
-  default     = "mysql"
+  type        = string
 }
 
 variable "db_instance_class" {
-  description = "RDS Free Tier Instance class"
-  default     = "db.t3.micro"
+  description = "RDS Instance class"
+  type        = string
 }
 
 variable "db_retention" {
   description = "Retention Period of RDS Backups"
-  default     = 7
+  type        = string
+}
+variable "db_name" {
+  description = "RDS MySQL default database name"
+  type        = string
 }
 
 variable "db_storage" {
-  description = "Free Tier Storage size in GB"
-  default     = 20
+  description = "RDS Storage size in GB"
+  type        = string
 }
 
 variable "db_username" {
@@ -66,22 +67,17 @@ variable "db_username" {
 
 variable "db_password" {
   description = "RDS MySQL master password"
+  type        = string
   sensitive   = true
 }
 
-variable "db_name" {
-  description = "RDS MySQL default database name"
-  type        = string
-  default     = "wordpressdb"
-}
-
 variable "key_pair_name" {
-  description = "Name of the SSH key pair to create"
-  default     = "main-ssh-key"
+  description = "Name of the SSH key pair to Create"
+  type        = string
 }
 
 variable "public_key_path" {
   description = "Path to the public key file to use for SSH access"
   type        = string
-  default     = "~/.ssh/id_rsa.pub"
+  sensitive   = true
 }

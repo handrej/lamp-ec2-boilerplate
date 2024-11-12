@@ -29,9 +29,9 @@ crash.*.log
 
 # Local development
 .vscode
-credentials.tfvars
 
 # Ignore .lock files
 *.lock.*
 
+# Credentials Storage
 *.vault

@@ -1,6 +1,4 @@
 # outputs.tf
-
-output "lb_dns" {
-  value       = aws_lb.lamp_lb.dns_name
-  description = "The DNS name of the Application Load Balancer"
+output "lb_dns_name" {
+  value = module.lb.lb_dns_name
 }
