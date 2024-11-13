@@ -89,12 +89,6 @@ cd ..   # Switch back to project directory
 pytest  # Run test_integration.py to ensure the infrastructure and application are running
 ```
 
-## Open Features
-
-- S3, SSL
-- improved IAM and Secret Management
-- various architectural topics e.g. Auto-Scaling, Backups, HA, Staging Concept, CI/CD Integration
-
 ## Encountered Issues
 
 - **Python Interpreter Mismatch**: When using Ansible on Amazon EC2 instances, especially with Amazon Linux AMI or Amazon Linux 2, the following issue can arise:
