@@ -13,6 +13,10 @@ This project is using Infrastructure as Code principles to setup a WordPress web
 
 - A Linux system
 - Free Tier AWS Account
+- AWS CLI v2 
+- Python 3.8+
+- Terraform 1.9+
+- Ansible 2.9+
 
 ## Project Structure
 
