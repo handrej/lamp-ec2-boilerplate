@@ -28,7 +28,9 @@ crash.*.log
 *.pub
 
 # Local development
-.vscode
+.vscode/
+__pycache__
+.pytest_cache
 
 # Ignore .lock files
 *.lock.*

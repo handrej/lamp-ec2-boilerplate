@@ -1,4 +1,5 @@
 <VirtualHost *:80>
+    RedirectMatch ^/$ /wordpress
     DocumentRoot /var/www/html
 
     <Directory /var/www/html>
