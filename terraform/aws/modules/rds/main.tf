@@ -36,4 +36,8 @@ resource "aws_ssm_parameter" "db_password" {
   value = var.db_password
 }
 
-
+resource "aws_ssm_parameter" "db_name" {
+  name  = "rds_database"
+  type  = "String"
+  value = var.db_name
+}

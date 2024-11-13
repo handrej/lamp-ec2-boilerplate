@@ -6,17 +6,19 @@
     ssm_parameter_endpoint: "rds_endpoint"
     ssm_parameter_username: "rds_username"
     ssm_parameter_password: "rds_password"
+    ssm_parameter_database: "rds_database"
   tasks:
     - name: Fetch username from AWS SSM Parameter Store
       set_fact:
         db_endpoint: "{{ lookup('amazon.aws.ssm_parameter', ssm_parameter_endpoint) }}"
         db_username: "{{ lookup('amazon.aws.ssm_parameter', ssm_parameter_username) }}"
         db_password: "{{ lookup('amazon.aws.ssm_parameter', ssm_parameter_password) }}"
+        db_name: "{{ lookup('amazon.aws.ssm_parameter', ssm_parameter_database) }}"
 - name: Setup Wordpress environment
   hosts: aws_ec2
   become: true
   vars:
-    wordpress_db_name: 'wordpress'
+    wordpress_db_name: "{{ hostvars['localhost'].db_name }}"
     wordpress_db_host: "{{ hostvars['localhost'].db_endpoint }}"
     wordpress_db_user: "{{ hostvars['localhost'].db_username }}"
     wordpress_db_pass: "{{ hostvars['localhost'].db_password }}"

@@ -16,13 +16,3 @@
     login_password: "{{ wordpress_db_pass }}"
     name: "{{ wordpress_db_name }}"
     state: present
-  register: wordpress_db_check
-
-- name: Create WordPress Database
-  mysql_db:
-    login_host: "{{ wordpress_db_host }}"
-    login_user: "{{ wordpress_db_user }}"
-    login_password: "{{ wordpress_db_pass }}"
-    name: "{{ wordpress_db_name }}"
-    state: present
-  when: wordpress_db_check.changed

@@ -107,10 +107,10 @@ if ! check_version "ansible"; then
 fi
 
 # Python venv setup
-if [ ! -d ".venv" ]; then
+if [ ! -d ".lamp-ec2" ]; then
     echo "Setting up Python virtual environment..."
-    python3 -m venv .venv
-    source .venv/bin/activate
+    python3 -m venv .lamp-ec2
+    source .lamp-ec2/bin/activate
     pip install -r requirements.txt
 else
     echo "Virtual environment already exists"
@@ -134,4 +134,4 @@ else
 fi
 
 echo "Setup complete! To activate virtual environment:"
-echo "source .venv/bin/activate"
+echo "source .lamp-ec2/bin/activate"

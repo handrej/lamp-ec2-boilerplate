@@ -32,6 +32,7 @@ crash.*.log
 __pycache__
 .pytest_cache
 .venv
+.lamp-ec2
 aws
 awscliv2.zip
 

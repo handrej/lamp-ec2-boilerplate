@@ -63,7 +63,7 @@ chmod +x setup.sh
 
 ```bash
 # Activate Python environment
-source .venv/bin/activate
+source .lamp-ec2/bin/activate
 ```
 
 ### Using Terraform:
