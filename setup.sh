@@ -7,17 +7,17 @@ if command -v apt-get &>/dev/null; then
     PKG_MANAGER="apt-get"
     PKG_UPDATE="$PKG_MANAGER update"
     PKG_INSTALL="$PKG_MANAGER install -y"
-    PYTHON_PKG="python3.8 python3-pip python3-venv"
+    PYTHON_PKG="python3 python3-pip python3-venv"
 elif command -v yum &>/dev/null; then
     PKG_MANAGER="yum"
     PKG_UPDATE="$PKG_MANAGER update -y"
     PKG_INSTALL="$PKG_MANAGER install -y"
-    PYTHON_PKG="python38 python38-pip python3-virtualenv"
+    PYTHON_PKG="python3 python3-pip python3-virtualenv"
 elif command -v dnf &>/dev/null; then
     PKG_MANAGER="dnf"
     PKG_UPDATE="$PKG_MANAGER update -y"
     PKG_INSTALL="$PKG_MANAGER install -y"
-    PYTHON_PKG="python38 python38-pip python3-virtualenv"
+    PYTHON_PKG="python3 python3-pip python3-virtualenv"
 elif command -v pacman &>/dev/null; then
     PKG_MANAGER="pacman"
     PKG_UPDATE="$PKG_MANAGER -Syu --noconfirm"
