@@ -12,9 +12,6 @@ This project is using Infrastructure as Code principles to setup a WordPress web
 ## Requirements
 
 - A Linux system
-- Python 3.8+
-- Terraform 1.9+
-- Ansible 2.9+
 - Free Tier AWS Account
 
 ## Project Structure
@@ -54,6 +51,7 @@ cd lamp-ec2-boilerplate
 
 ```bash
 chmod +x setup.sh
+# This will take care of installing any dependencies and setup the run environment
 ./setup.sh
 ```
 
