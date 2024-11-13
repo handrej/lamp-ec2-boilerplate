@@ -58,9 +58,7 @@ chmod +x setup.sh
 #### Environment Configuration
 
 ```bash
-# Setup AWS credentials
-aws configure
-# Setup Python environment
+# Activate Python environment
 source .venv/bin/activate
 ```
 
@@ -73,17 +71,18 @@ terraform plan      # Review changes
 terraform apply     # Apply changes
 ```
 
-### Using Ansible
+### Run Ansible Playbook to install AMP
 
 ```bash
-cd ../ansible
-ansible-playbook playbook.yml   # Run playbook
+cd ../../ansible
+ansible-playbook playbook.yml
 ```
 
 ### Run Tests
 
 ```bash
-pytest tests/test_integration.py  # Apply Terraform, Ansible, and (optionally) tear it down
+cd ..   # Switch back to project directory
+pytest  # Run test_integration.py to ensure the infrastructure and application are running
 ```
 
 ## Open Features

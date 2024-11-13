@@ -40,14 +40,18 @@ echo "Detected package manager: $PKG_MANAGER"
 echo "Checking and installing Infrastructure as Code prerequisites..."
 
 # System updates
-#sudo $PKG_UPDATE
+sudo $PKG_UPDATE
 
-# Python check and install
+# Ansble requirements check and install
 if ! check_version "ansible"; then
     echo "Installing Python 3..."
-    sudo apt-get install -y python3 python3-pip python3-venv
-else
-    echo "Python 3+ is already installed: $(python3 --version)"
+    sudo $PKG_INSTALL $PYTHON_PKG
+fi
+
+# Utilities check and install
+if ! check_version "unzip"; then
+    echo "Installing unzip..."
+    sudo $PKG_INSTALL unzip
 fi
 
 # AWS CLI check and install
@@ -88,7 +92,7 @@ fi
 # Ansible check and install
 if ! check_version "ansible"; then
     echo "Installing Ansible..."
-     case $PKG_MANAGER in
+    case $PKG_MANAGER in
         "apt-get")
             sudo $PKG_INSTALL ansible
             ;;
